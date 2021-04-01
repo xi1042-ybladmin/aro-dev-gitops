@@ -22,12 +22,12 @@ spec:
         - containerPort: 1521
           name: listener
         volumeMounts:
-        - name: oracle
+        - name: oracle1
           mountPath: /u01/app/oracle
   
   volumeClaimTemplates:
   - metadata:
-      name: oracle
+      name: oracle1
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "managed-standard"
