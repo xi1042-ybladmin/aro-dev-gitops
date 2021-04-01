@@ -21,9 +21,6 @@ spec:
         ports:
         - containerPort: 1521
           name: listener
-        volumeMounts:
-        - name: oracle1
-          mountPath: /u01/app/oracle
   
   volumeClaimTemplates:
   - metadata:
