@@ -23,7 +23,7 @@ spec:
           name: listener
         volumeMounts:
         - name: oracle
-          mountPath: /u01/app/oracle/
+          mountPath: /tmp/oracle/
   volumeClaimTemplates:
   - metadata:
       name: oracle
