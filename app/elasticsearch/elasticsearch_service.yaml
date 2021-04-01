@@ -6,7 +6,7 @@ metadata:
     app: elasticsearch
 spec:
   ports:
-  - name: 9200-tcp
+  - name: 9201-tcp
     port: 9200
     protocol: TCP
     targetPort: 9200
