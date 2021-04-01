@@ -16,7 +16,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: elasticsearch
-        image: image-registry.openshift-image-registry.svc:5000/openshift/elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.8.8
         ports:
         - containerPort: 9200
           protocol: TCP
