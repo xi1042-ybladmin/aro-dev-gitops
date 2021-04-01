@@ -7,6 +7,7 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
       template.openshift.io/expose-password: '{.data[''database-password'']}'
     creationTimestamp: null
+    namespace: redis
     labels:
       app: redis-persistent
       app.kubernetes.io/component: redis-persistent
@@ -22,6 +23,7 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
       template.openshift.io/expose-uri: redis://{.spec.clusterIP}:{.spec.ports[?(.name=="redis")].port}
     creationTimestamp: null
+    namespace: redis    
     labels:
       app: redis-persistent
       app.kubernetes.io/component: redis-persistent
@@ -46,6 +48,7 @@ items:
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
+    namespace: redis    
     labels:
       app: redis-persistent
       app.kubernetes.io/component: redis-persistent
@@ -67,6 +70,7 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
       template.alpha.openshift.io/wait-for-ready: "true"
     creationTimestamp: null
+    namespace: redis    
     labels:
       app: redis-persistent
       app.kubernetes.io/component: redis-persistent
