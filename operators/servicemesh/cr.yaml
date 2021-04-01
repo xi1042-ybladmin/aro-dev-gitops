@@ -1,7 +1,8 @@
 apiVersion: maistra.io/v1
 kind: ServiceMeshControlPlane
 metadata:
-  name: basic-install
+  name: basic
+  namespace: istio-system
 spec:
 
   istio:
