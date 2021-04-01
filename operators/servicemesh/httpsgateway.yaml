@@ -1,0 +1,38 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: https-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: wildcard-gateway
+      protocol: HTTPS
+    tls:
+      minProtocolVersion: TLSV1_2
+      mode: SIMPLE
+      serverCertificate: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.key
+    hosts:
+    - cust360.apps.ybldev.com
+    - sso.apps.ybldev.com
+    - admsso.apps.ybldev.com
+    - minio.apps.ybldev.com
+    - telemetry.apps.ybldev.com
+    - geniemobile.apps.ybldev.com
+    - upimerchant.apps.ybldev.com
+  - port:
+      number: 443
+      name: ms-gateway
+      protocol: HTTPS
+    tls:
+      minProtocolVersion: TLSV1_2
+      mode: MUTUAL
+      serverCertificate: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.key
+      caCertificates: /etc/istio/ingressgateway-certs/ingressgateway-ca-certs/ca-chain.cert.pem
+    hosts:
+    - ms.apps.ybldev.com
