@@ -2,3 +2,4 @@ resources:
 - subscription.yaml
 - ServiceMeshControlPlane.yaml
 - ServiceMeshMemberRoll.yaml
+- httpsgateway.yaml
