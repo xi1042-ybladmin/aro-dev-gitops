@@ -3,7 +3,9 @@ kind: ImageStream
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"image.openshift.io/v1","kind":"ImageStream","metadata":{"annotations":{},"generation":1,"labels":{"app.kubernetes.io/instance":"easticsearch"},"name":"elasticsearch","namespace":"openshift"},"spec":{"lookupPolicy":{"local":false},"tags":[{"annotations":null,"from":{"kind":"DockerImage","name":"docker.elastic.co/elasticsearch/elasticsearch:6.8.8"},"generation":1,"importPolicy":{},"name":"latest","referencePolicy":{"type":"Source"}}]},"status":{"dockerImageRepository":"image-registry.openshift-image-registry.svc:5000/openshift/elasticsearch","tags":[{"items":[{"created":"2021-03-31T12:56:46Z","dockerImageReference":"docker.elastic.co/elasticsearch/elasticsearch@sha256:0e0fd27c4e133399d8c5419141915cbf04966aa808427f21bd316fb7c5bed61f","generation":1,"image":"sha256:0e0fd27c4e133399d8c5419141915cbf04966aa808427f21bd316fb7c5bed61f"}],"tag":"latest"}]}}
+      {"apiVersion":"image.openshift.io/v1","kind":"ImageStream","metadata":{"annotations":{"openshift.io/image.dockerRepositoryCheck":"2021-04-01T05:26:40Z"},"creationTimestamp":"2021-04-01T05:26:39Z","generation":2,"labels":{"app.kubernetes.io/instance":"easticsearch"},"managedFields":[{"apiVersion":"image.openshift.io/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:kubectl.kubernetes.io/last-applied-configuration":{}},"f:labels":{".":{},"f:app.kubernetes.io/instance":{}}},"f:spec":{"f:tags":{".":{},"k:{\"name\":\"latest\"}":{".":{},"f:annotations":{},"f:from":{".":{},"f:kind":{},"f:name":{}},"f:generation":{},"f:importPolicy":{},"f:name":{},"f:referencePolicy":{".":{},"f:type":{}}}}},"f:status":{"f:dockerImageRepository":{},"f:tags":{".":{},"k:{\"tag\":\"latest\"}":{".":{},"f:items":{},"f:tag":{}}}}},"manager":"argocd-application-controller","operation":"Update","time":"2021-04-01T05:34:15Z"}],"name":"elasticsearch","namespace":"openshift","resourceVersion":"4148254","selfLink":"/apis/image.openshift.io/v1/namespaces/openshift/imagestreams/elasticsearch","uid":"395447fc-8eeb-41ef-a83b-f4635859cde6"},"spec":{"lookupPolicy":{"local":false},"tags":[{"annotations":null,"from":{"kind":"DockerImage","name":"docker.elastic.co/elasticsearch/elasticsearch:6.8.8"},"generation":2,"importPolicy":{},"name":"latest","referencePolicy":{"type":"Source"}}]},"status":{"dockerImageRepository":"image-registry.openshift-image-registry.svc:5000/openshift/elasticsearch","tags":[{"items":[{"created":"2021-04-01T05:26:40Z","dockerImageReference":"docker.elastic.co/elasticsearch/elasticsearch@sha256:0e0fd27c4e133399d8c5419141915cbf04966aa808427f21bd316fb7c5bed61f","generation":2,"image":"sha256:0e0fd27c4e133399d8c5419141915cbf04966aa808427f21bd316fb7c5bed61f"}],"tag":"latest"}]}}
+    openshift.io/image.dockerRepositoryCheck: "2021-04-01T05:40:53Z"
+  creationTimestamp: "2021-04-01T05:40:52Z"
   generation: 2
   labels:
     app.kubernetes.io/instance: easticsearch
@@ -15,6 +17,7 @@ metadata:
         f:annotations:
           .: {}
           f:kubectl.kubernetes.io/last-applied-configuration: {}
+          f:openshift.io/image.dockerRepositoryCheck: {}
         f:labels:
           .: {}
           f:app.kubernetes.io/instance: {}
@@ -44,11 +47,12 @@ metadata:
             f:tag: {}
     manager: argocd-application-controller
     operation: Update
+    time: "2021-04-01T05:40:52Z"
   name: elasticsearch
   namespace: openshift
-  resourceVersion: "4148254"
+  resourceVersion: "4150341"
   selfLink: /apis/image.openshift.io/v1/namespaces/openshift/imagestreams/elasticsearch
-  uid: 395447fc-8eeb-41ef-a83b-f4635859cde6
+  uid: 4a90fed6-2e57-412a-8ed8-4610ea56a886
 spec:
   lookupPolicy:
     local: false
@@ -57,16 +61,8 @@ spec:
     from:
       kind: DockerImage
       name: docker.elastic.co/elasticsearch/elasticsearch:6.8.8
-    generation: 2
+    generation: 0
     importPolicy: {}
     name: latest
     referencePolicy:
       type: Source
-status:
-  dockerImageRepository: image-registry.openshift-image-registry.svc:5000/openshift/elasticsearch
-  tags:
-  - items:
-      dockerImageReference: docker.elastic.co/elasticsearch/elasticsearch@sha256:0e0fd27c4e133399d8c5419141915cbf04966aa808427f21bd316fb7c5bed61f
-      generation: 2
-      image: sha256:0e0fd27c4e133399d8c5419141915cbf04966aa808427f21bd316fb7c5bed61f
-    tag: latest
