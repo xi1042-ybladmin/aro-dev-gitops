@@ -36,7 +36,7 @@ spec:
       resources:
         requests:
           storage: 5Gi
-   - metadata:
+  - metadata:
       name: secondoracle
     spec:
       accessModes: [ "ReadWriteOnce" ]
