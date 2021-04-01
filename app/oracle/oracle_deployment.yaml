@@ -24,6 +24,9 @@ spec:
         volumeMounts:
         - name: oracle
           mountPath: /u01/app/oracle-product
+        - name: secondoracle
+          mountPath: /u01/app/oracle
+  
   volumeClaimTemplates:
   - metadata:
       name: oracle
@@ -33,3 +36,11 @@ spec:
       resources:
         requests:
           storage: 5Gi
+   - metadata:
+      name: secondoracle
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "managed-standard"
+      resources:
+        requests:
+          storage: 1Gi         
