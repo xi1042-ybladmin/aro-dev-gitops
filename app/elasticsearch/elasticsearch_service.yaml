@@ -4,6 +4,7 @@ metadata:
   name: elasticsearch
   labels:
     app: elasticsearch
+  namespace: elasticsearch
 spec:
   ports:
   - name: 9200-tcp
