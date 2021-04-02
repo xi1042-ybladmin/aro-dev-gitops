@@ -69,6 +69,7 @@ items:
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
       template.alpha.openshift.io/wait-for-ready: "true"
+      argocd.argoproj.io/compare-options: IgnoreExtraneous
     creationTimestamp: null
     namespace: redis    
     labels:
