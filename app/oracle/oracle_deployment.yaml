@@ -17,7 +17,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: oracle
-        image: ejlp12/docker-oracle-xe
+        image: image-registry.openshift-image-registry.svc:5000/openshift/oracle:18.4.0-xe
         ports:
         - containerPort: 1521
           name: listener
