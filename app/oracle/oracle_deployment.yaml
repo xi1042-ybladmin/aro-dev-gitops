@@ -15,6 +15,21 @@ spec:
         app: oracle
     spec:
       terminationGracePeriodSeconds: 10
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - chown 54321:54322 /opt/oracle/oradata
+        image: busybox
+        imagePullPolicy: Always
+        name: init-myservice
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/oracle/oradata
+          name: new-oracle
+      
       containers:
       - name: oracle
         image: image-registry.openshift-image-registry.svc:5000/openshift/oracle:18.4.0-xe
@@ -23,7 +38,7 @@ spec:
           name: listener
         volumeMounts:
         - name: oracle
-          mountPath: /u01/app/oracle/
+          mountPath: /opt/oracle/oradata
   volumeClaimTemplates:
   - metadata:
       name: oracle
