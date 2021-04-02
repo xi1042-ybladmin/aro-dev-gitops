@@ -28,8 +28,7 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/oracle/oradata
-          name: new-oracle
-      
+          name: oracle
       containers:
       - name: oracle
         image: image-registry.openshift-image-registry.svc:5000/openshift/oracle:18.4.0-xe
