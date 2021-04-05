@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: {{ template "keycloak-chart.name" . }}
+  name: {{ .Values.monitoring.name }}
+  namespace: {{ .Values.monitoring.namespace }}
+spec:
+  endpoints:
+  - interval: {{ .Values.monitoring.interval }}
+    port: {{ .Values.monitoring.port }}
+    path: {{ .Values.monitoring.path }}
+  jobLabel: {{ .Values.monitoring.jobLabel }}
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app: {{ template "keycloak-chart.name" . }}
+      type: http
+

@@ -1,0 +1,168 @@
+{{- $highAvailability := gt (int .Values.keycloak.replicas) 1 -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "keycloak-chart.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    checksum/config: {{ include (print .Template.BasePath "/configmap.yaml") . | sha256sum }}
+  labels:
+    app: {{ template "keycloak-chart.name" . }}
+    chart: {{ template "keycloak-chart.chart" . }}
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "keycloak-chart.name" . }}
+      release: "{{ .Release.Name }}"
+  replicas: {{ .Values.keycloak.replicas }}
+  serviceName: {{ template "keycloak-chart.fullname" . }}-headless
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ template "keycloak-chart.name" . }}
+        release: "{{ .Release.Name }}"
+      {{- if .Values.keycloak.podLabels }}
+{{ toYaml .Values.keycloak.podLabels | indent 8 }}
+      {{- end }}        
+{{- if .Values.keycloak.podAnnotations }}
+      annotations:
+{{ toYaml .Values.keycloak.podAnnotations | indent 8 }}
+{{- end }}
+    spec:
+      serviceAccountName: {{ .Values.serviceaccount.name }}
+{{- with .Values.keycloak.hostAliases }}
+      hostAliases:
+{{ toYaml . | indent 8 }}
+{{- end }}
+      securityContext:
+{{ toYaml .Values.keycloak.securityContext | indent 8 }}
+    {{- with .Values.keycloak.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
+    {{- end }}
+    {{- if or .Values.keycloak.persistence.deployPostgres .Values.keycloak.extraInitContainers }}
+      initContainers:
+      {{- if .Values.keycloak.persistence.deployPostgres }}
+        - name: wait-for-postgresql
+          image: "{{ .Values.init.image.repository }}:{{ .Values.init.image.tag }}"
+          imagePullPolicy: {{ .Values.init.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - |
+              until printf "." && nc -z -w 2 {{ template "keycloak.postgresql.fullname" . }} {{ .Values.postgresql.service.port }}; do
+                  sleep 2;
+              done;
+
+              echo 'PostgreSQL OK ✓'
+      {{- end }}
+      {{- if .Values.keycloak.extraInitContainers }}
+{{ tpl .Values.keycloak.extraInitContainers . | indent 8 }}
+      {{- end }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.deployment.image.name }}:{{ .Values.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.keycloak.image.pullPolicy }}
+          command:
+            - /scripts/keycloak.sh
+        {{- if .Values.keycloak.lifecycleHooks }}
+          lifecycle:
+{{ tpl .Values.keycloak.lifecycleHooks . | indent 12 }}
+        {{- end }}
+          env:
+            - name: KEYCLOAK_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "keycloak-chart.fullname" . }}
+                  key: KEYCLOAK_USER
+            - name: KEYCLOAK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "keycloak-chart.fullname" . }}
+                  key: KEYCLOAK_PASSWORD
+            - name: ORACLE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "keycloak-chart.fullname" . }}
+                  key: ORACLE_USERNAME
+            - name: ORACLE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "keycloak-chart.fullname" . }}
+                  key: ORACLE_PASSWORD
+{{- with .Values.keycloak.extraEnv }}
+{{ tpl . $ | indent 12 }}
+{{- end }}
+          volumeMounts:
+            - name: scripts
+              mountPath: /scripts
+{{- with .Values.keycloak.extraVolumeMounts }}
+{{ tpl . $ | indent 12 }}
+{{- end }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          {{- if $highAvailability }}
+            - name: jgroups
+              containerPort: 7600
+              protocol: TCP
+          {{- end }}
+{{- with .Values.keycloak.extraPorts }}
+{{ tpl . $ | indent 12 }}
+{{- end }}
+          livenessProbe:
+            httpGet:
+              path: {{ if ne .Values.keycloak.basepath "" }}/{{ .Values.keycloak.basepath }}{{ end }}/
+              port: http
+            initialDelaySeconds: {{ .Values.keycloak.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.keycloak.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.keycloak.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.keycloak.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.keycloak.livenessProbe.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ if ne .Values.keycloak.basepath "" }}/{{ .Values.keycloak.basepath }}{{ end }}/realms/master
+              port: http
+            initialDelaySeconds: {{ .Values.keycloak.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.keycloak.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.keycloak.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.keycloak.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.keycloak.readinessProbe.failureThreshold }}
+          resources:
+{{ toYaml .Values.keycloak.resources | indent 12 }}
+{{- with .Values.keycloak.extraContainers }}
+{{ tpl . $ | indent 8 }}
+{{- end }}
+    {{- with .Values.keycloak.affinity }}
+      affinity:
+{{ tpl . $ | indent 8 }}
+    {{- end }}
+    {{- with .Values.keycloak.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.keycloak.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+{{- if .Values.keycloak.priorityClassName }}
+      priorityClassName: {{ .Values.keycloak.priorityClassName }}
+{{- end }}      
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ template "keycloak-chart.fullname" . }}
+            defaultMode: 0555
+{{- with .Values.keycloak.extraVolumes }}
+{{ tpl . $ | indent 8 }}
+{{- end }}
