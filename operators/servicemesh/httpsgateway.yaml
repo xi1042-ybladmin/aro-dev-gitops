@@ -24,6 +24,7 @@ spec:
     - telemetry.apps.ybldev.com
     - geniemobile.apps.ybldev.com
     - upimerchant.apps.ybldev.com
+    - kibanatest.apps.ybldev.com
   - port:
       number: 443
       name: ms-gateway
