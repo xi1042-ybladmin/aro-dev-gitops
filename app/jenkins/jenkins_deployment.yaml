@@ -3,6 +3,7 @@ items:
 - apiVersion: route.openshift.io/v1
   kind: Route
   metadata:
+    namespace: devops
     annotations:
       haproxy.router.openshift.io/timeout: 4m
       openshift.io/generated-by: OpenShiftNewApp
@@ -24,6 +25,7 @@ items:
 - apiVersion: v1
   kind: ConfigMap
   metadata:
+    namespace: devops
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
@@ -35,6 +37,7 @@ items:
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
+    namespace: devops
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
@@ -53,6 +56,7 @@ items:
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
+    namespace: devops
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
       template.alpha.openshift.io/wait-for-ready: "true"
@@ -160,6 +164,7 @@ items:
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
+    namespace: devops
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
       serviceaccounts.openshift.io/oauth-redirectreference.jenkins: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"jenkins"}}'
@@ -172,6 +177,7 @@ items:
   groupNames: null
   kind: RoleBinding
   metadata:
+    namespace: devops
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
@@ -188,6 +194,7 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
+    namespace: devops
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
@@ -210,6 +217,7 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
+    namespace: devops
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
       service.alpha.openshift.io/dependencies: '[{"name": "jenkins-jnlp", "namespace":
