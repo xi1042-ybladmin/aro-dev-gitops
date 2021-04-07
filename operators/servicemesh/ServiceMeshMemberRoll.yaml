@@ -10,3 +10,4 @@ spec:
     - genie-ms
     - co
     - upi-merchant
+    - keycloak
