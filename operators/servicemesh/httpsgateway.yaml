@@ -25,7 +25,7 @@ spec:
     - geniemobile.apps.ybldev.com
     - upimerchant.apps.ybldev.com
     - kibanatest.apps.ybldev.com
-    - httpdtest.apps.ybldev.com
+    - httpd-test.apps.ybldev.com
   - port:
       number: 443
       name: ms-gateway
