@@ -48,4 +48,4 @@ spec:
       serverCertificate: /etc/istio/ingressgateway-certs/ingressgateway-sk-certs/tls.crt
       privateKey: /etc/istio/ingressgateway-certs/ingressgateway-sk-certs/tls.key
     hosts:
-    - sk.xebia.com   
+    - sk.openxebia.com  
