@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+  namespace: {{ .Values.namespace }}
+data:
+  desired-timezone: {{ .Values.configMap.timeZone }}
+  database_name: {{ .Values.configMap.database_name }}
+  oracle-service: {{ .Values.configMap.oracle_service }}
+  oracle_port: {{ .Values.configMap.oracle_port }}
+  spring-active-profile: {{ .Values.configMap.spring_active_profile }}
+  authServerService: {{ .Values.configMap.authServerService }}
+  yblMSRealm: {{ .Values.configMap.yblMSRealm }}
+  msClientId: {{ .Values.configMap.msClientId }}
+  loggingLevelRoot: {{ .Values.configMap.loggingLevelRoot}}

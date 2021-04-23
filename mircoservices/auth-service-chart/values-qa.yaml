@@ -1,0 +1,47 @@
+namespace: cust360
+deployment:
+  name: auth-audit
+  hostAlias:
+    sso:
+      ip: 192.168.7.37
+      hostName: sso.apps.ybldev.com
+    cust360:
+      ip: 192.168.7.37
+      hostName: cust360.apps.ybldev.com
+    ms:
+      ip: 192.168.7.37
+      hostName: ms.apps.ybldev.com
+  image:
+    name: image-registry.openshift-image-registry.svc:5000/openshift/auth-service
+    tag: latest
+  containerPort: 8080
+
+service:
+  name: auth-audit-svc
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+  portName: http
+
+
+configMap:
+  name: auth-audit
+  timeZone: Asia/Kolkata
+  msClientId: yes-genie-frontend
+  spring_active_profile: prod
+  yblMSRealm: YBL
+
+secret:
+  name: auth-audit
+  database_password: YXV0aF9zZXJ2aWNlX3Fh
+  database_user: YXV0aF9zZXJ2aWNlX3Fh
+
+virtualService:
+  name: auth-service
+  uri1: /api/user/login/audit
+  host1: cust360.apps.ybldev.com
+  host2: geniemobile.apps.ybldev.com
+
+autoscaler:
+  name: auth-audit-as
+

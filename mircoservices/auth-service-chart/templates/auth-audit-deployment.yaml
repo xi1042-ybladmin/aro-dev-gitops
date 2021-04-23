@@ -1,0 +1,126 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.deployment.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}-{{ .Values.deployment.name }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Release.Name }}-{{ .Values.deployment.name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}-{{ .Values.deployment.name }}
+        app: {{ .Values.deployment.name }}
+      annotations:
+        sidecar.istio.io/inject: 'true'
+    spec:
+      {{- if .Values.deployment.hostAlias }}
+      hostAliases:
+        - ip: {{ .Values.deployment.hostAlias.sso.ip }}
+          hostnames:
+          - {{ .Values.deployment.hostAlias.sso.hostName }}
+        - ip: {{ .Values.deployment.hostAlias.cust360.ip }}
+          hostnames:
+          - {{ .Values.deployment.hostAlias.cust360.hostName }}
+      {{- end }}
+      {{- if .Values.deployment.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.deployment.imagePullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.deployment.image.name }}:{{ .Values.deployment.image.tag }}"
+          {{- if .Values.deployment.resources }}
+          command: ["java"]
+          args:
+            - -Djava.security.egd=file:/dev/./urandom
+            - -Dspring.metrics.servo.enabled=false
+            {{- if .Values.deployment.resources }}
+            - -Xms{{ .Values.deployment.resources.requests.javaHeap }}
+            - -Xmx{{ .Values.deployment.resources.requests.javaHeap }}
+            {{- end }}
+            - -jar
+            - app.jar
+          resources:
+            requests:
+              cpu: {{ .Values.deployment.resources.requests.cpu }}
+              memory: {{ .Values.deployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.deployment.resources.limits.cpu }}
+              memory: {{ .Values.deployment.resources.limits.memory }}
+          {{- end }}
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.deployment.containerPort }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.deployment.readinessProbe.httpGet.path }}
+              port: {{ .Values.deployment.readinessProbe.httpGet.port }}
+            initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.deployment.livenessProbe.httpGet.path }}
+              port: {{ .Values.deployment.livenessProbe.httpGet.port }}
+            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+          env:
+            - name: ORACLE_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: oracle-service
+            - name: ORACLE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: oracle_port
+            - name: ORACLE_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: database_name
+            - name: DESIRED_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: desired-timezone
+            - name: ORACLE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.secret.name }}
+                  key: database_user
+            - name: ORACLE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.secret.name }}
+                  key: database_password
+            - name: SPRING_ACTIVE_PROFILE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: spring-active-profile
+            - name: AUTH_SERVER_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: authServerService
+            - name: YBL_MS_REALM
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: yblMSRealm
+            - name: MS_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: msClientId
+            - name: LOGGING_LEVEL_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.configMap.name }}
+                  key: loggingLevelRoot

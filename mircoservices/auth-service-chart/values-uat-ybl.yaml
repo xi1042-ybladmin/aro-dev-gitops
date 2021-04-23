@@ -1,0 +1,38 @@
+namespace: cust360
+deployment:
+  name: auth-audit
+  image:
+    name: registry-k8s.yesbank.in/auth-service
+    tag: latest
+  containerPort: 8080
+
+service:
+  name: auth-audit-svc
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+  portName: http
+
+
+configMap:
+  name: auth-audit
+  timeZone: Asia/Kolkata
+  msClientId: yes-genie-frontend
+  spring_active_profile: prod
+  yblMSRealm: YBL
+
+
+virtualService:
+  name: auth-service
+  uri1: /api/user/login/audit
+  host1: cust360.uat-genie.yesbank.in
+  host2: geniemobileuat.yesbank.in
+
+secret:
+  name: auth-audit
+  database_password: QW5hbHl0aWNzMjAyMA==
+  database_user: Z25fbG9naW5fYXVkaXRfdQ==
+
+autoscaler:
+  name: auth-audit-as
+
