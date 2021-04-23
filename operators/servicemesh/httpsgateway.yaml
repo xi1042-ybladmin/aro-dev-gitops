@@ -24,6 +24,8 @@ spec:
     - telemetry.apps.ybldev.com
     - geniemobile.apps.ybldev.com
     - upimerchant.apps.ybldev.com
+    - kibanatest.apps.ybldev.com
+    - httpd-test.apps.ybldev.com
   - port:
       number: 443
       name: ms-gateway
@@ -36,3 +38,14 @@ spec:
       caCertificates: /etc/istio/ingressgateway-certs/ingressgateway-ca-certs/ca-chain.cert.pem
     hosts:
     - ms.apps.ybldev.com
+  - port:
+      number: 443
+      name: sk-gateway
+      protocol: HTTPS
+    tls:
+      minProtocolVersion: TLSV1_2
+      mode: SIMPLE
+      serverCertificate: /etc/istio/ingressgateway-certs/ingressgateway-sk-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-certs/ingressgateway-sk-certs/tls.key
+    hosts:
+    - sk.openxebia.com  
