@@ -35,7 +35,7 @@ spec:
       mode: MUTUAL
       serverCertificate: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.crt
       privateKey: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.key
-      caCertificates: /etc/istio/ingressgateway-certs/ingressgateway-ca-certs/ca-chain.cert.pem
+      caCertificates: /etc/istio/ingressgateway-ca-certs/ca-chain.cert.pem
     hosts:
     - ms.apps.ybldev.com
   - port:
