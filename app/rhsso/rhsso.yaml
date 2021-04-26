@@ -3,6 +3,7 @@ items:
 - apiVersion: v1
   kind: ConfigMap
   metadata:
+    namespace: rhsso
     annotations:
       description: ConfigMap providing service ca bundle.
       openshift.io/generated-by: OpenShiftNewApp
@@ -19,6 +20,7 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
+    namespace: rhsso
     annotations:
       description: The web server's https port.
       openshift.io/generated-by: OpenShiftNewApp
@@ -43,6 +45,7 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
+    namespace: rhsso
     annotations:
       description: The JGroups ping port for clustering.
       openshift.io/generated-by: OpenShiftNewApp
@@ -70,6 +73,7 @@ items:
 - apiVersion: route.openshift.io/v1
   kind: Route
   metadata:
+    namespace: rhsso
     annotations:
       description: Route for application's https service.
       openshift.io/generated-by: OpenShiftNewApp
@@ -93,6 +97,7 @@ items:
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
+    namespace: rhsso
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
