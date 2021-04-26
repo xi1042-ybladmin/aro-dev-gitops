@@ -25,11 +25,11 @@ data:
 
     set DB_DRIVER_NAME=oracle
 
-    set DB_USERNAME=GN_KEYCLOAK_U
+    set DB_USERNAME=RHSSO
 
-    set DB_PASSWORD=KEYLOCK#2021
+    set DB_PASSWORD=RHSSO
 
-    set DB_JDBC_URL=jdbc:oracle:thin:@10.231.0.84:1651:GENIEUAT
+    set DB_JDBC_URL=jdbc:oracle:thin:@20.75.112.83:1521/XEPDB1
 
     /subsystem=keycloak-server/spi=hostname:remove()
 
