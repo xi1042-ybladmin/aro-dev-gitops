@@ -149,7 +149,7 @@ items:
           - name: SSO_REALM
           - name: SSO_SERVICE_USERNAME
           - name: SSO_SERVICE_PASSWORD
-          image: sso
+          image: keycloak:rhssoxoracle
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -210,7 +210,7 @@ items:
         - sso
         from:
           kind: ImageStreamTag
-          name: sso74-openshift-rhel8:7.4
+          name: keycloak:rhssoxoracle
           namespace: openshift
       type: ImageChange
     - type: ConfigChange
