@@ -1,0 +1,10 @@
+kind: Group
+apiVersion: user.openshift.io/v1
+metadata:
+  name: temp-admin
+users:
+  - Ashu.Rana@xebia.com
+  - sumit.kadian@xebia.com
+  - nitin.nagpal@xebia.com
+  - raja.vengala@xebia.com
+  - rohit.dagur@xebia.com
