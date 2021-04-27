@@ -191,8 +191,6 @@ items:
           - mountPath: /var/run/configmaps/service-ca
             name: service-ca
             readOnly: true
-          - name: jboss-cli
-            mountPath: /opt/eap/extensions  
         terminationGracePeriodSeconds: 75
         volumes:
         - name: sso-x509-https-volume
@@ -204,10 +202,6 @@ items:
         - configMap:
             name: sso-service-ca
           name: service-ca
-        - name: jboss-cli
-          configMap:
-            name: jboss-cli
-            defaultMode: 493  
     test: false
     triggers:
     - imageChangeParams:
