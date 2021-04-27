@@ -29,7 +29,7 @@ data:
 
     set DB_PASSWORD=RHSSO
 
-    set DB_JDBC_URL=jdbc:oracle:thin:@oracle-service.svc.default.cluster.local:1521/XEPDB1
+    set DB_JDBC_URL=jdbc:oracle:thin:@oracle-service.default.svc.cluster.local:1521/XEPDB1
 
     /system-property=jboss.as.management.blocking.timeout:add(value=600)
 
