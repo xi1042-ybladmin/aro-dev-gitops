@@ -123,6 +123,5 @@
           name: keycloak:rhssoxoracle
           namespace: openshift
       type: ImageChange
-    - type: ConfigChange
 kind: List
 metadata: {}
