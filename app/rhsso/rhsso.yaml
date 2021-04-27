@@ -110,7 +110,7 @@ items:
       template: sso74-ocp4-x509-https
     name: sso
   spec:
-    replicas: 1
+    replicas: 0
     selector:
       deploymentConfig: sso
     strategy:
