@@ -31,11 +31,13 @@ data:
 
     set DB_JDBC_URL=jdbc:oracle:thin:@20.75.112.83:1521/XEPDB1
 
+    /system-property=jboss.as.management.blocking.timeout:add(value=600)
+
     /subsystem=keycloak-server/spi=hostname:remove()
 
     /subsystem=keycloak-server/spi=hostname:add(default-provider=fixed)
 
-    /subsystem=keycloak-server/spi=hostname/provider=fixed:add(enabled=true,properties=[hostname=${keycloak.hostname.fixed.hostname:localhost},httpPort=${keycloak.hostname.fixed.httpPort:-1},httpsPort=${keycloak.hostname.fixed.httpsPort:-1},alwaysHttps=true])
+    /subsystem=keycloak-server/spi=hostname/provider=fixed:add(enabled=true,properties=[hostname=${keycloak.hostname.fixed.hostname:ssogenieuat.yesbank.in},httpPort=${keycloak.hostname.fixed.httpPort:-1},httpsPort=${keycloak.hostname.fixed.httpsPort:-1},alwaysHttps=true])
 
     module add --name=com.oracle
     --resources=/opt/eap/standalone/deployments/ojdbc10.jar
