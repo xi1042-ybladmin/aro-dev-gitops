@@ -2,6 +2,8 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: tem-admin
+  labels:
+    app.kubernetes.io/instance: operations
 subjects:
   - kind: Group
     apiGroup: rbac.authorization.k8s.io
