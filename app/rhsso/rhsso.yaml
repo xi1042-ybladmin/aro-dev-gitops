@@ -89,7 +89,7 @@ items:
     tls:
       termination: reencrypt
     to:
-      kind: Service
+      kind: service
       name: sso
       weight: null
   status: {}
