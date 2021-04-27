@@ -17,58 +17,6 @@ items:
       rhsso: 7.4.2.GA
       template: sso74-ocp4-x509-https
     name: sso-service-ca
-- apiVersion: v1
-  kind: Service
-  metadata:
-    annotations:
-      description: The web server's https port.
-      openshift.io/generated-by: OpenShiftNewApp
-      service.alpha.openshift.io/serving-cert-secret-name: sso-x509-https-secret
-    creationTimestamp: null
-    labels:
-      app: sso74-ocp4-x509-https
-      app.kubernetes.io/component: sso74-ocp4-x509-https
-      app.kubernetes.io/instance: sso74-ocp4-x509-https
-      application: sso
-      rhsso: 7.4.2.GA
-      template: sso74-ocp4-x509-https
-    name: sso
-  spec:
-    ports:
-    - port: 8443
-      targetPort: 8443
-    selector:
-      deploymentConfig: sso
-  status:
-    loadBalancer: {}
-- apiVersion: v1
-  kind: Service
-  metadata:
-    namespace: rhsso
-    annotations:
-      description: The JGroups ping port for clustering.
-      openshift.io/generated-by: OpenShiftNewApp
-      service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
-      service.alpha.openshift.io/serving-cert-secret-name: sso-x509-jgroups-secret
-    creationTimestamp: null
-    labels:
-      app: sso74-ocp4-x509-https
-      app.kubernetes.io/component: sso74-ocp4-x509-https
-      app.kubernetes.io/instance: sso74-ocp4-x509-https
-      application: sso
-      rhsso: 7.4.2.GA
-      template: sso74-ocp4-x509-https
-    name: sso-ping
-  spec:
-    clusterIP: None
-    ports:
-    - name: ping
-      port: 8888
-      targetPort: 0
-    selector:
-      deploymentConfig: sso
-  status:
-    loadBalancer: {}
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
