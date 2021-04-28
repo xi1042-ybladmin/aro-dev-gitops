@@ -1,0 +1,46 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jboss-cli
+  namespace: test
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: v1
+      time: '2021-03-25T10:53:54Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data': {}
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2021-03-26T08:14:35Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          'f:sso-extensions.cli': {}
+data:
+  sso-extensions.cli: >
+    batch
+    set DB_DRIVER_NAME=oracle
+    set DB_USERNAME=RHSSO
+    set DB_PASSWORD=RHSSO
+    set DB_JDBC_URL=jdbc:oracle:thin:@oracle-service.default.svc.cluster.local:1521/XEPDB1
+    /system-property=jboss.as.management.blocking.timeout:add(value=600)
+    /subsystem=keycloak-server/spi=hostname:remove()
+    /subsystem=keycloak-server/spi=hostname:add(default-provider=fixed)
+    /subsystem=keycloak-server/spi=hostname/provider=fixed:add(enabled=true,properties=[hostname=${keycloak.hostname.fixed.hostname:sso-rhsso.apps.ybldev.com},httpPort=${keycloak.hostname.fixed.httpPort:-1},httpsPort=${keycloak.hostname.fixed.httpsPort:-1},alwaysHttps=true])
+    module add --name=com.oracle
+    --resources=/opt/eap/standalone/deployments/ojdbc10.jar
+    --dependencies=javax.api,javax.transaction.api
+    /subsystem=datasources/jdbc-driver=oracle:add(driver-name=oracle,driver-module-name=com.oracle,driver-class-name=oracle.jdbc.driver.OracleDriver,driver-xa-datasource-class-name=oracle.jdbc.xa.client.OracleXADataSource)
+    /subsystem=datasources/data-source=KeycloakDS:remove()
+    data-source add --name=KeycloakDS
+    --jndi-name=java:jboss/datasources/KeycloakDS --driver-name=oracle
+    --connection-url=$DB_JDBC_URL --user-name=$DB_USERNAME
+    --password=$DB_PASSWORD --validate-on-match=true
+    --background-validation=false
+    --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker
+    --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.oracle.OracleExceptionSorter
+    --stale-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.oracle.OracleStaleConnectionChecker
+     run-batch
