@@ -90,9 +90,9 @@ items:
     tls:
       termination: reencrypt
     to:
-      kind: ""
+      kind: Service
       name: sso
-      weight: null
+      weight: 100
   status: {}    
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
