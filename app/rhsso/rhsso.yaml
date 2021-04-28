@@ -157,7 +157,7 @@ items:
               - /bin/bash
               - -c
               - /opt/eap/bin/livenessProbe.sh
-            initialDelaySeconds: 60
+            initialDelaySeconds: 300
           name: sso
           ports:
           - containerPort: 8778
