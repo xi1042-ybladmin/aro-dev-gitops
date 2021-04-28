@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+    namespace: test
     annotations:
       description: ConfigMap providing service ca bundle.
       openshift.io/generated-by: OpenShiftNewApp
