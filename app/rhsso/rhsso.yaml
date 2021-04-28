@@ -97,7 +97,7 @@ items:
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-    namespace: test
+    namespace: rhsso
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
