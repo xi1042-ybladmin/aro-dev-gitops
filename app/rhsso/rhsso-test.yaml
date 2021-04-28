@@ -52,7 +52,31 @@ items:
     selector:
       deploymentConfig: sso
   status:
-    loadBalancer: {}    
+    loadBalancer: {}
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    namespace: test
+    annotations:
+      description: Route for application's https service.
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: sso74-ocp4-x509-https
+      app.kubernetes.io/component: sso74-ocp4-x509-https
+      app.kubernetes.io/instance: sso74-ocp4-x509-https
+      application: sso
+      rhsso: 7.4.2.GA
+      template: sso74-ocp4-x509-https
+    name: sso
+  spec:
+    tls:
+      termination: reencrypt
+    to:
+      kind: ""
+      name: sso
+      weight: null
+  status: {}    
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
