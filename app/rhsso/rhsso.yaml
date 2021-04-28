@@ -158,6 +158,10 @@ items:
               - -c
               - /opt/eap/bin/livenessProbe.sh
             initialDelaySeconds: 300
+            failureThreshold: 30
+            periodSeconds: 100
+            successThreshold: 1
+            timeoutSeconds: 1  
           name: sso
           ports:
           - containerPort: 8778
@@ -178,8 +182,8 @@ items:
               - /bin/bash
               - -c
               - /opt/eap/bin/readinessProbe.sh
-            failureThreshold: 30
-            periodSeconds: 100
+            failureThreshold: 3
+            periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1  
           resources:
