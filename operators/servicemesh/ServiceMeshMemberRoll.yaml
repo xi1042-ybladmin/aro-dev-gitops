@@ -12,3 +12,4 @@ spec:
     - upi-merchant
     - keycloak
     - test
+    - minio-tenant-1
