@@ -20,7 +20,6 @@ spec:
     - cust360.apps.ybldev.com
     - sso.apps.ybldev.com
     - admsso.apps.ybldev.com
-    - minio.apps.ybldev.com
     - telemetry.apps.ybldev.com
     - geniemobile.apps.ybldev.com
     - upimerchant.apps.ybldev.com
