@@ -25,6 +25,7 @@ spec:
     - upimerchant.apps.ybldev.com
     - kibanatest.apps.ybldev.com
     - httpd-test.apps.ybldev.com
+    - midas.apps.ybldev.com
   - port:
       number: 443
       name: ms-gateway
