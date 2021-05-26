@@ -14,8 +14,8 @@ spec:
     tls:
       minProtocolVersion: TLSV1_2
       mode: SIMPLE
-      serverCertificate: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.crt
-      privateKey: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.key
+      serverCertificate: /etc/istio/ingressgateway-ybl-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-ybl-certs/tls.key
     hosts:
     - cust360.apps.ybldev.com
     - sso.apps.ybldev.com
@@ -33,8 +33,8 @@ spec:
     tls:
       minProtocolVersion: TLSV1_2
       mode: MUTUAL
-      serverCertificate: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.crt
-      privateKey: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.key
+      serverCertificate: /etc/istio/ingressgateway-ybl-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-ybl-certs/tls.key
       caCertificates: /etc/istio/ingressgateway-ca-certs/ca-chain.cert.pem
     hosts:
     - ms.apps.ybldev.com
@@ -45,7 +45,7 @@ spec:
     tls:
       minProtocolVersion: TLSV1_2
       mode: PASSTHROUGH
-      serverCertificate: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.crt
-      privateKey: /etc/istio/ingressgateway-certs/ingressgateway-ybl-certs/tls.key
+      serverCertificate: /etc/istio/ingressgateway-ybl-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-ybl-certs/tls.key
     hosts:
     - minio.apps.ybldev.com
