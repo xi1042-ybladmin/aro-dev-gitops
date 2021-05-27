@@ -188,7 +188,11 @@ items:
             timeoutSeconds: 1  
           resources:
             limits:
+              memory: 2Gi
+              cpu: 1000m
+            requests: 
               memory: 1Gi
+              cpu: 500m
           volumeMounts:
           - mountPath: /etc/x509/https
             name: sso-x509-https-volume
