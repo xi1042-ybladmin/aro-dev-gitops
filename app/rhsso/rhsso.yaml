@@ -126,8 +126,6 @@ items:
           deploymentConfig: sso
         name: sso
       spec:
-        nodeSelector: 
-          kubernetes.io/hostname: ybldev-ccpsv-worker-eastus21-v8pgf
         containers:
         - env:
           - name: SSO_HOSTNAME
