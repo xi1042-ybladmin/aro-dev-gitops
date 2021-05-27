@@ -44,7 +44,7 @@ spec:
       protocol: HTTPS    
     tls:
       minProtocolVersion: TLSV1_2
-      mode: PASSTHROUGH
+      mode: SIMPLE
       serverCertificate: /etc/istio/ingressgateway-ybl-certs/tls.crt
       privateKey: /etc/istio/ingressgateway-ybl-certs/tls.key
     hosts:
