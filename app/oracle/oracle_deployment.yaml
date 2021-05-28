@@ -46,4 +46,4 @@ spec:
       storageClassName: "managed-standard"
       resources:
         requests:
-          storage: 8Gi      
+          storage: 10Gi      
