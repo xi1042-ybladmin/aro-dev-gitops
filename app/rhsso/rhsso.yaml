@@ -149,8 +149,8 @@ items:
           - name: SSO_REALM
           - name: SSO_SERVICE_USERNAME
           - name: SSO_SERVICE_PASSWORD
-          - name: JAVA_OPTS
-            value: "$JAVA_OPTS -Xms512m -Xmx1024m"
+          - name: JAVA_OPTS_APPEND
+            value: "-Xmx1024m"
           image: image-registry.openshift-image-registry.svc:5000/openshift/keycloak:rhssoxoracle
           imagePullPolicy: Always
           livenessProbe:
