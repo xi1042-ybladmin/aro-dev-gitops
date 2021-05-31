@@ -32,7 +32,7 @@ spec:
       protocol: HTTPS
     tls:
       minProtocolVersion: TLSV1_2
-      mode: MUTUAL
+      mode: SIMPLE
       serverCertificate: /etc/istio/ingressgateway-ybl-certs/tls.crt
       privateKey: /etc/istio/ingressgateway-ybl-certs/tls.key
       caCertificates: /etc/istio/ingressgateway-ca-certs/ca-chain.cert.pem
